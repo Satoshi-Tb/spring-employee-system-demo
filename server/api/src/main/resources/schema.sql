@@ -1,4 +1,13 @@
 /* 従業員テーブル */
+CREATE TABLE IF NOT EXISTS employees (
+  id VARCHAR(50) PRIMARY KEY,
+  email_id VARCHAR(50),
+  first_name VARCHAR(50),
+  last_name VARCHAR(50)
+);
+
+
+/* 従業員テーブル */
 CREATE TABLE IF NOT EXISTS employee (
   id VARCHAR(50) PRIMARY KEY,
   name VARCHAR(50),
