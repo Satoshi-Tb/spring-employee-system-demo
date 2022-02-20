@@ -2,6 +2,7 @@ package dev.springsample.employee.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import dev.springsample.employee.model.Employee;
 import dev.springsample.employee.services.EmployeeService;
 
 @RestController
+@CrossOrigin(origins = {"http://localhot:8080", "http://localhost:3000"})
 @RequestMapping("/api/v1/")
 public class EmployeeController {
 	
