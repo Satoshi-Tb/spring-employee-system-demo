@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useRef, useState } from "react";
+import { saveEmployee } from "../services/EmployeeService";
 
 export const AddEmployee = () => {
   // 入力値保持
@@ -16,8 +16,6 @@ export const AddEmployee = () => {
   const refInputFirstName = useRef(null);
   const refInputLastName = useRef(null);
   const refInputEmail = useRef(null);
-
-  const POST_URL = "http://localhost:8080/api/v1/employees";
 
   const inputFirstName = (str) => {
     console.log(str);
@@ -72,12 +70,12 @@ export const AddEmployee = () => {
     }
     setIsProcessing(true);
     try {
-      const postData = {
+      const employeeData = {
         firstName: firstName,
         lastName: lastName,
         emailId: email,
       };
-      const response = await axios.post(POST_URL, postData);
+      const response = await saveEmployee(employeeData);
       console.log(response.data);
 
       clearForm();
