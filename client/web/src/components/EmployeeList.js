@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllEmployees } from "../services/EmployeeService";
+import { Employee } from "./Employee";
 
 export const EmployeeList = () => {
   console.log("EmployeeList called");
@@ -55,31 +56,7 @@ export const EmployeeList = () => {
           <tbody className="bg-white">
             {!loading &&
               employeeList.map((employee) => (
-                <tr key={employee.id}>
-                  <td className="text-left px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">
-                      {employee.firstName}
-                    </div>
-                  </td>
-                  <td className="text-left px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">
-                      {employee.lastName}
-                    </div>
-                  </td>
-                  <td className="text-left px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">
-                      {employee.emailId}
-                    </div>
-                  </td>
-                  <td className="text-right px-6 py-4 whitespace-nowrap font-medium text-sm">
-                    <button className="text-gray-500 font-bold bg-transparent border-none cursor-pointer inline px-2 py-4">
-                      Edit
-                    </button>
-                    <button className="text-gray-500 font-bold bg-transparent border-none cursor-pointer inline px-2 py-4">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+                <Employee key={employee.id} employee={employee} />
               ))}
           </tbody>
         </table>
