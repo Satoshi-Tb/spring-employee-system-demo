@@ -54,4 +54,43 @@ public class EmployeeServiceImple implements EmployeeService {
 				
 	}
 
+
+
+	@Override
+	public boolean deleteEmployee(Long id) {
+		EmployeeEntity entity = repository.findById(id).get();
+		repository.delete(entity);
+		return true;
+	}
+
+
+	
+
+	@Override
+	public Employee getEmployeeById(Long id) {
+		EmployeeEntity entity = repository.findById(id).get();
+		Employee employee = new Employee();
+		BeanUtils.copyProperties(entity, employee);
+		return employee;
+	}
+
+
+
+	@Override
+	public Employee updateEmployee(Long id, Employee employee) {
+		
+		EmployeeEntity entity = repository.findById(id).get();
+		
+		// memo
+		// 参考動画ではBeanUtilsの利用を分けていた
+		// model -> entityではBeansUtilsを使用しない
+		// entity -> modelではBeanUtilsを使用する
+		// 何か意図があるはず
+		BeanUtils.copyProperties(employee, entity);
+		repository.save(entity);
+		return employee;
+	}
+	
+	
+
 }
