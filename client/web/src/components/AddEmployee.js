@@ -41,7 +41,7 @@ export const AddEmployee = () => {
     setLastName("");
   };
 
-  const handleSave = async (event) => {
+  const handleSave = (event) => {
     event.preventDefault();
     console.log(refInputFirstName.current);
     if (firstName === "") {
@@ -62,21 +62,23 @@ export const AddEmployee = () => {
       return;
     }
     setIsProcessing(true);
-    try {
-      const employeeData = {
-        firstName: firstName,
-        lastName: lastName,
-        emailId: email,
-      };
-      const response = await saveEmployee(employeeData);
-      console.log(response.data);
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-      alert("エラーが発生しました。時間をおいて再度試してください");
-    } finally {
-      setIsProcessing(false);
-    }
+    (async () => {
+      try {
+        const employeeData = {
+          firstName: firstName,
+          lastName: lastName,
+          emailId: email,
+        };
+        const data = await saveEmployee(employeeData);
+        console.log(data);
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+        alert("エラーが発生しました。時間をおいて再度試してください");
+      } finally {
+        setIsProcessing(false);
+      }
+    })();
   };
 
   const handleClear = (e) => {

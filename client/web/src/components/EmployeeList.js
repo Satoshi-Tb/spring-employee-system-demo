@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllEmployees } from "../services/EmployeeService";
+import { deleteEmployee, getAllEmployees } from "../services/EmployeeService";
 import { Employee } from "./Employee";
 
 export const EmployeeList = () => {
@@ -8,6 +8,20 @@ export const EmployeeList = () => {
   const [loading, setLoading] = useState(false);
   const [employeeList, setEmployeeList] = useState([]);
 
+  const handleDelete = (id) => {
+    (async () => {
+      try {
+        const result = await deleteEmployee(id);
+        console.log(result);
+
+        const newEmployeeList = employeeList.filter((item) => item.id !== id);
+        setEmployeeList(newEmployeeList);
+      } catch (error) {
+        console.log(error);
+        alert("削除に失敗しました");
+      }
+    })();
+  };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,7 +30,7 @@ export const EmployeeList = () => {
       try {
         const list = await getAllEmployees();
         console.log(list);
-        setEmployeeList(list.data);
+        setEmployeeList(list);
       } catch (error) {
         console.log(error);
       } finally {
@@ -56,7 +70,11 @@ export const EmployeeList = () => {
           <tbody className="bg-white">
             {!loading &&
               employeeList.map((employee) => (
-                <Employee key={employee.id} employee={employee} />
+                <Employee
+                  key={employee.id}
+                  employee={employee}
+                  handleDelete={handleDelete}
+                />
               ))}
           </tbody>
         </table>
