@@ -11,6 +11,11 @@ export const getAllEmployees = async () => {
   return response.data;
 };
 
+export const getEmployeeById = async (id) => {
+  const response = await axios.get(`${EMPLOYEE_API_BASE_URL}/${id}`);
+  return response.data;
+};
+
 export const updateEmployee = async (id, employee) => {
   const response = await axios.put(`${EMPLOYEE_API_BASE_URL}/${id}`, employee);
   return response.data;
