@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteEmployee, getAllEmployees } from "../services/EmployeeService";
 import { Employee } from "./Employee";
+import { Spinner } from "./Spinner";
 
 export const EmployeeList = () => {
   console.log("EmployeeList called");
@@ -33,9 +34,8 @@ export const EmployeeList = () => {
         setEmployeeList(list);
       } catch (error) {
         console.log(error);
-      } finally {
-        setLoading(false);
       }
+      setLoading(false);
     })();
   }, []);
 
@@ -68,14 +68,21 @@ export const EmployeeList = () => {
             </tr>
           </thead>
           <tbody className="bg-white">
-            {!loading &&
+            {loading ? (
+              <tr>
+                <td colSpan={4} className="text-center">
+                  <Spinner />
+                </td>
+              </tr>
+            ) : (
               employeeList.map((employee) => (
                 <Employee
                   key={employee.id}
                   employee={employee}
                   handleDelete={handleDelete}
                 />
-              ))}
+              ))
+            )}
           </tbody>
         </table>
       </div>

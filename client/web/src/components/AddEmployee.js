@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveEmployee } from "../services/EmployeeService";
+import { Spinner } from "./Spinner";
 
 export const AddEmployee = () => {
   // 入力値保持
@@ -21,17 +22,14 @@ export const AddEmployee = () => {
   const navigate = useNavigate();
 
   const inputFirstName = (str) => {
-    console.log(str);
     setFirstName(str);
   };
 
   const inputLastName = (str) => {
-    console.log(str);
     setLastName(str);
   };
 
   const inputEmail = (str) => {
-    console.log(str);
     setEmail(str);
   };
 
@@ -43,7 +41,6 @@ export const AddEmployee = () => {
 
   const handleSave = (event) => {
     event.preventDefault();
-    console.log(refInputFirstName.current);
     if (firstName === "") {
       alert("firstNameを入力してください。");
       refInputFirstName.current.focus();
@@ -61,8 +58,9 @@ export const AddEmployee = () => {
       refInputEmail.current.focus();
       return;
     }
-    setIsProcessing(true);
+
     (async () => {
+      setIsProcessing(true);
       try {
         const employeeData = {
           firstName: firstName,
@@ -74,9 +72,8 @@ export const AddEmployee = () => {
         navigate("/");
       } catch (error) {
         console.log(error);
-        alert("エラーが発生しました。時間をおいて再度試してください");
-      } finally {
         setIsProcessing(false);
+        alert("エラーが発生しました。時間をおいて再度試してください");
       }
     })();
   };
@@ -138,20 +135,26 @@ export const AddEmployee = () => {
           ></input>
         </div>
         <div className="items-center justify-center h-14 w-full my-4 space-x-4 pt-4">
-          <button
-            className="rounded text-white font-semibold bg-green-400 py-2 px-6 hover:bg-green-800"
-            onClick={handleSave}
-            disabled={isProcessing}
-          >
-            Save
-          </button>
-          <button
-            className="rounded text-white font-semibold bg-red-400 py-2 px-6 hover:bg-red-800"
-            onClick={handleClear}
-            disabled={isProcessing}
-          >
-            Clear
-          </button>
+          {isProcessing ? (
+            <Spinner />
+          ) : (
+            <>
+              <button
+                className="rounded text-white font-semibold bg-green-400 py-2 px-6 hover:bg-green-800"
+                onClick={handleSave}
+                disabled={isProcessing}
+              >
+                Save
+              </button>
+              <button
+                className="rounded text-white font-semibold bg-red-400 py-2 px-6 hover:bg-red-800"
+                onClick={handleClear}
+                disabled={isProcessing}
+              >
+                Clear
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

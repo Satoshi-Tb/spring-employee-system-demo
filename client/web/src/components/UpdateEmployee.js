@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getEmployeeById, updateEmployee } from "../services/EmployeeService";
+import { Spinner } from "./Spinner";
 
 export const UpdateEmployee = () => {
   const { id } = useParams();
@@ -37,7 +38,6 @@ export const UpdateEmployee = () => {
 
   const handleUpdate = (event) => {
     event.preventDefault();
-    console.log(refInputFirstName.current);
     if (employee.firstName === "") {
       alert("firstNameを入力してください。");
       refInputFirstName.current.focus();
@@ -63,9 +63,8 @@ export const UpdateEmployee = () => {
         navigate("/");
       } catch (error) {
         console.log(error);
-        alert("エラーが発生しました。時間をおいて再度試してください");
-      } finally {
         setIsProcessing(false);
+        alert("エラーが発生しました。時間をおいて再度試してください");
       }
     })();
   };
@@ -137,22 +136,26 @@ export const UpdateEmployee = () => {
           ></input>
         </div>
         <div className="items-center justify-center h-14 w-full my-4 space-x-4 pt-4">
-          <button
-            className="rounded text-white font-semibold bg-green-400 py-2 px-6 hover:bg-green-800"
-            onClick={handleUpdate}
-            disabled={isProcessing}
-          >
-            Save
-          </button>
-          <button
-            className="rounded text-white font-semibold bg-red-400 py-2 px-6 hover:bg-red-800"
-            onClick={() => {
-              navigate("/employeeList");
-            }}
-            disabled={isProcessing}
-          >
-            Cancel
-          </button>
+          {isProcessing ? (
+            <Spinner />
+          ) : (
+            <>
+              <button
+                className="rounded text-white font-semibold bg-green-400 py-2 px-6 hover:bg-green-800"
+                onClick={handleUpdate}
+              >
+                Save
+              </button>
+              <button
+                className="rounded text-white font-semibold bg-red-400 py-2 px-6 hover:bg-red-800"
+                onClick={() => {
+                  navigate("/employeeList");
+                }}
+              >
+                Cancel
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
