@@ -23,3 +23,8 @@
     * モデル ビュー側で利用。
     * エンティティ DB操作で使用。
 * フロントエンド
+  * 非同期操作時のsetState実装はメモリリークの問題なし。警告は無視してよい。  
+    公式で言及有り[^1]。V18から警告でなくなる。
+[^1]:[Update to remove the "setState on unmounted component" warning #82](https://github.com/reactwg/react-18/discussions/82)
+  * コンポーネントはもう少し細かく分割したほうがよいかもしれない。例えば、1行テキストや、ボタンなど。
+  * Tailwind CSSを使う場合、共通CSSの扱いはどうするのが良いか。classを定義するか。
